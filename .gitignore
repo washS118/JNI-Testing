@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Java Class files
+*.class
+
+# JAR files
+*.jar
+
+# Visual Studio Code settings folder
+.vscode
