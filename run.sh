@@ -1,13 +1,11 @@
 #!/bin/bash
 export PATH=$PATH:/bin/jdk-10/bin
 
-make TestDriver.class
-make TestDriver.h
-make TestDriver.lib
+make program
 
 echo ""
 echo "Starting Program"
 echo ""
 
 cd bin
-java TestDriver
+java app/TestDriver $PWD/lib/TestDriver.lib

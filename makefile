@@ -1,17 +1,20 @@
 CC = g++
-JC = export PATH=$PATH:/bin/jdk-10/bin;javac
-JH = export PATH=$PATH:/bin/jdk-10/bin;javac -h
+JC = javac
+JH = javac -h
 BIN = bin
+LIB = bin/lib
 SRC = src
 JNI = /bin/jdk-10/include
 JNILIN = /bin/jdk-10/include/linux
 
-TestDriver.class: $(SRC)/TestDriver.java
-	$(JC) -d $(BIN) $(SRC)/TestDriver.java
+program: $(BIN)/app/TestDriver.class $(LIB)/TestDriver.lib
 
-TestDriver.h: $(SRC)/TestDriver.java
-	$(JH) $(SRC) $(SRC)/TestDriver.java
-	rm TestDriver.class
+$(BIN)/app/TestDriver.class: $(SRC)/app/TestDriver.java
+	$(JC) -d $(BIN) $(SRC)/app/TestDriver.java
 
-TestDriver.lib: $(SRC)/TestDriver.cpp
-	$(CC) -o $(BIN)/TestDriver.lib -shared -I$(JNI) -I$(JNILIN) $(SRC)/TestDriver.cpp
+$(SRC)/header/app_TestDriver.h: $(SRC)/app/TestDriver.java
+	$(JH) $(SRC)/header $(SRC)/app/TestDriver.java
+	rm $(SRC)/app/TestDriver.class
+
+$(LIB)/TestDriver.lib: $(SRC)/cpp/TestDriver.cpp $(SRC)/header/app_TestDriver.h
+	$(CC) -o $(LIB)/TestDriver.lib -shared -I$(JNI) -I$(JNILIN) $(SRC)/cpp/TestDriver.cpp
