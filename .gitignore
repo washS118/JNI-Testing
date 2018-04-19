@@ -37,5 +37,8 @@
 # JAR files
 *.jar
 
-# Visual Studio Code settings folder
-.vscode
+# IDE files
+.classpath
+.project
+.settings/
+build.fxbuild
