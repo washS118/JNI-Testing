@@ -1,29 +1,41 @@
 package app;
 
-public class TestDriver{
+import java.io.File;
+import javafx.fxml.FXMLLoader;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.*;
+
+public class TestDriver extends Application{
+    private static final String BIN_DIR = "/lib";
+
     public native int intMethod(int n);
     public native boolean booleanMethod(boolean b);
-    
-    static{
-        System.load("/mnt/c/Users/lukeg/source/repos/MIDI-Drum-Sampler/bin/lib/TestDriver.lib");
-        //System.loadLibrary("TestDriver");
-    }
 
     public static void main(String[] args){
-        //loadLibs(args);
-
-        TestDriver sample = new TestDriver();
-        int square = sample.intMethod(5);
-        boolean bool = sample.booleanMethod(false);
-
-        System.out.println("intMethod: " + square);
-        System.out.println("boolMethod: " + bool);
+        //loadLibs();
+        Application.launch(TestDriver.class);
     }
 
-    private static void loadLibs(String args[]){
-        for(String i : args){
-            System.out.println(i);
-            System.load(i);
+    @Override
+    public void start(Stage stage) throws Exception{
+        AnchorPane root = FXMLLoader.load(getClass().getResource("fxml/main.fxml"));
+    
+        Scene scene = new Scene(root, 300, 275);
+    
+        stage.setTitle("FXML Welcome");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private static void loadLibs(){
+        File folder = new File(System.getProperty("user.dir") + BIN_DIR);
+        File[] files = folder.listFiles();
+        for(File i : files){
+            String path = i.toString();
+            System.out.println(path);
+            System.load(path);
         }
     }
 }
